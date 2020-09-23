@@ -1,0 +1,42 @@
+# Make sure to edit /etc/ansible/hosts to include the right hostname for your cumulus. 
+# I've add the following:
+# [cumulus]
+# cumulus-l-01 ansible_ssh_user=cumulus ansible_ssh_pass=password 
+# Also make sure host is resolvable in DNS or /etc/hosts.
+---
+- hosts: cumulus-l-01
+  become: yes
+
+  tasks:
+    - name: Set hostname.
+      nclu:
+        commands:
+          - add hostname cumulus-l-01.ray.salab.local
+        commit: true
+    
+    - name: Add VLAN's.
+      nclu:
+        commands:
+          - add vlan 100 ip address 192.168.100.1/24
+          - add vlan 101 ip address 192.168.101.1/24
+          - add vlan 103 ip address 192.168.103.1/24
+          - add vlan 105 ip address 192.168.105.1/24
+          - add vlan 200 ip address 192.168.200.1/24
+        commit: true
+    
+    - name: Add BGP router & neighbors
+      nclu:
+        commands:
+          - add bgp autonomous-system 65001
+          - add bgp neighbor 192.168.101.254 remote-as 65004
+          - add bgp neighbor 192.168.103.254 remote-as 65004
+          - add bgp neighbor 192.168.105.254 remote-as 65004
+          - add bgp neighbor 172.16.1.1 remote-as 65000
+        commit: true
+
+    - name: Configure Route Redistribution
+      nclu:
+        commands:
+          - add bgp redistribute connected
+          - add bgp redistribute static
+        commit: true
