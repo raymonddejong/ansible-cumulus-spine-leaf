@@ -2,10 +2,10 @@
 # I've add the following:
 # [cumulus]
 # cumulus-s-01 ansible_ssh_user=cumulus ansible_ssh_pass=password 
-# Also make sure host is resolvable in DNS or /etc/hosts.
+# Make sure host is resolvable in DNS or /etc/hosts.
+# Also make sure you are able to connect to the Cumulus Router using SSH. 
 ---
 - hosts: cumulus-s-01
-  become: yes
 
   tasks:
     - name: Set hostname.

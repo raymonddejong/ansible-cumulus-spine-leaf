@@ -5,7 +5,6 @@
 # Also make sure host is resolvable in DNS or /etc/hosts.
 ---
 - hosts: cumulus-l-01
-  become: yes
 
   tasks:
     - name: Set hostname.
