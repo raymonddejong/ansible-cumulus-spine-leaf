@@ -26,10 +26,10 @@
       nclu:
         commands:
           - add bgp autonomous-system 65002
-          - add bgp neighbor 192.168.102.254 remote-as 65004
-          - add bgp neighbor 192.168.104.254 remote-as 65004
-          - add bgp neighbor 192.168.106.254 remote-as 65004
           - add bgp neighbor 172.16.1.1 remote-as 65000
+          - add bgp neighbor 192.168.102.254 remote-as 65005
+          - add bgp neighbor 192.168.104.254 remote-as 65005
+          - add bgp neighbor 192.168.106.254 remote-as 65005
         commit: true
 
     - name: Configure Route Redistribution
